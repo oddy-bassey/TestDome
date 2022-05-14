@@ -24,7 +24,50 @@ public class RoutePlanner {
 
     public static boolean routeExists(int fromRow, int fromColumn, int toRow, int toColumn,
                                       boolean[][] mapMatrix) {
-        throw new UnsupportedOperationException("Waiting to be implemented.");
+
+        if(fromRow < 0 || fromColumn < 0 || toRow < 0 || toColumn < 0) {
+            return false;
+        }
+        if(fromRow >= mapMatrix.length || fromColumn >= mapMatrix[0].length || toRow >= mapMatrix.length || toColumn >= mapMatrix[0].length) {
+            return false;
+        }
+        if(!mapMatrix[fromRow][fromColumn] || !mapMatrix[toRow][toColumn]) {
+            return false;
+        }
+        //if (fromRow > mapMatrix.length-1 || fromColumn > mapMatrix[0].length-1) return false;
+
+        System.out.println("at "+fromRow+","+fromColumn+" *****");
+        // route exists if fromRow = toRow && fromColumn = toColumn
+        if (fromRow==toRow && fromColumn==toColumn) {
+            return true;
+        }
+        //if(toRow==0 || toColumn==0) return false;
+
+        // go right or go down or go left or go up if path exists
+
+        // going right: (y,x+1)
+        if(fromRow >= 0 && fromColumn >= 0) {
+            if ((fromRow <= mapMatrix.length - 1) && (fromColumn + 1) <= (mapMatrix[0].length - 1) && mapMatrix[fromRow][fromColumn + 1]) {
+                return routeExists(fromRow, fromColumn + 1, toRow, toColumn, mapMatrix);
+            }
+
+            // going down: (y+1,x)
+            if ((fromRow + 1) <= (mapMatrix.length - 1) && (fromColumn) <= (mapMatrix[0].length - 1) && mapMatrix[fromRow + 1][fromColumn]) {
+                return routeExists(fromRow + 1, fromColumn, toRow, toColumn, mapMatrix);
+            }
+
+            // going left (y,x-1)
+            if ((fromRow <= mapMatrix.length - 1) && (fromColumn - 1) >= 0 && mapMatrix[fromRow][fromColumn - 1]) {
+                return routeExists(fromRow, fromColumn - 1, toRow, toColumn, mapMatrix);
+            }
+
+            // going up: (y-1,x)
+            if ((fromRow - 1) >= 0 && (fromColumn) <= (mapMatrix[0].length - 1) && mapMatrix[fromRow - 1][fromColumn]) {
+                return routeExists(fromRow - 1, fromColumn, toRow, toColumn, mapMatrix);
+            }
+        }
+
+        return false;
     }
 
     public static void main(String[] args) {
