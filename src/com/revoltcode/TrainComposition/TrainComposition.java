@@ -23,13 +23,13 @@ public class TrainComposition {
     public int detachWagonFromLeft() {
         if(!wagons.isEmpty()) return wagons.removeFirst();
 
-        return 0;
+        return -1;
     }
 
     public int detachWagonFromRight() {
         if(!wagons.isEmpty()) return wagons.removeLast();
 
-        return 0;
+        return -1;
     }
 
     public static void main(String[] args) {
